@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSS.BOT", "JSS.BOT\JSS.BOT.csproj", "{5C1A0C9F-A076-4E46-8B50-A01D40F9905B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSS.BOT.Events", "JSS.BOT.Events\JSS.BOT.Events.csproj", "{0CF4BFFE-C3EB-4745-BA48-8053EDE0077D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSS.BOT.Interfaces", "JSS.BOT.Interfaces\JSS.BOT.Interfaces.csproj", "{530A8DBD-B2D4-497F-8D65-84FBB1689996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSS.BOT.SlashCommands", "JSS.BOT.SlashCommands\JSS.BOT.SlashCommands.csproj", "{5F9EAEBC-B73B-4516-BC2D-9060233AE8D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C1A0C9F-A076-4E46-8B50-A01D40F9905B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1A0C9F-A076-4E46-8B50-A01D40F9905B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1A0C9F-A076-4E46-8B50-A01D40F9905B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1A0C9F-A076-4E46-8B50-A01D40F9905B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF4BFFE-C3EB-4745-BA48-8053EDE0077D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF4BFFE-C3EB-4745-BA48-8053EDE0077D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF4BFFE-C3EB-4745-BA48-8053EDE0077D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF4BFFE-C3EB-4745-BA48-8053EDE0077D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{530A8DBD-B2D4-497F-8D65-84FBB1689996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{530A8DBD-B2D4-497F-8D65-84FBB1689996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{530A8DBD-B2D4-497F-8D65-84FBB1689996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{530A8DBD-B2D4-497F-8D65-84FBB1689996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F9EAEBC-B73B-4516-BC2D-9060233AE8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F9EAEBC-B73B-4516-BC2D-9060233AE8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F9EAEBC-B73B-4516-BC2D-9060233AE8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F9EAEBC-B73B-4516-BC2D-9060233AE8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
