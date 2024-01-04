@@ -17,43 +17,57 @@ namespace JSS.BOT.SlashCommands.Admin
                 [Option("emoji", "Emoji to get information about")] string emoji,
                 [Option("name", "Name to assign to the emoji")] string name)
         {
-            var emojiId = ExtractEmojiId(emoji);
-
-            if (emojiId == ulong.MinValue)
+            try
             {
+                var emojiId = ExtractEmojiId(emoji);
+
+                if (emojiId == ulong.MinValue)
+                {
+                    await ctx.CreateResponseAsync(
+                        InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder()
+                            .AddEmbed(new DiscordEmbedBuilder
+                            {
+                                Description = $"Emoji invalido!",
+                                Color = new DiscordColor("#363636"),
+                            })
+                            .AsEphemeral(false)
+                    );
+
+                    return;
+                }
+
+                var isGif = emoji.Contains("<a:") ? ".gif?size=128&quality=lossless" : ".webp?size=128&quality=lossless";
+                var url = $"https://cdn.discordapp.com/emojis/{emojiId}{isGif}";
+
+                byte[] imageData = await url.GetBytesAsync();
+                using MemoryStream stream = new(imageData);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                var newIcon = await ctx.Guild.CreateEmojiAsync(name, stream);
+
                 await ctx.CreateResponseAsync(
                     InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder()
                         .AddEmbed(new DiscordEmbedBuilder
                         {
-                            Description = $"Emoji invalido!",
+                            Description = $"Novo emoji criado com sucesso! {newIcon}",
                             Color = new DiscordColor("#363636"),
                         })
                         .AsEphemeral(false)
                 );
-
-                return;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
 
-            var isGif = emoji.Contains("<a:") ? ".gif?size=128&quality=lossless" : ".webp?size=128&quality=lossless";
-            var url = $"https://cdn.discordapp.com/emojis/{emojiId}{isGif}";
-
-            byte[] imageData = await url.GetBytesAsync();
-            using MemoryStream stream = new(imageData);
-            stream.Seek(0, SeekOrigin.Begin);
-
-            var newIcon = await ctx.Guild.CreateEmojiAsync(name, stream);
-
-            await ctx.CreateResponseAsync(
-                InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Description = $"Novo emoji criado com sucesso! {newIcon}",
-                        Color = new DiscordColor("#363636"),
-                    })
-                    .AsEphemeral(false)
-            );
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
         }
 
 
@@ -99,7 +113,7 @@ namespace JSS.BOT.SlashCommands.Admin
                         .AddEmbed(new DiscordEmbedBuilder
                         {
                             Description = $"Emoji ``{guildEmoji.Name}`` removido com sucesso!",
-                            Color = new DiscordColor("#363636"), 
+                            Color = new DiscordColor("#363636"),
                         })
                         .AsEphemeral(false)
                 );
@@ -107,7 +121,7 @@ namespace JSS.BOT.SlashCommands.Admin
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                
+
                 await ctx.CreateResponseAsync(
                     InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder()

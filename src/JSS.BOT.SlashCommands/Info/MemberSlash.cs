@@ -42,19 +42,33 @@ namespace JSS.BOT.SlashCommands.Info
         public static async Task AvatarUser(InteractionContext ctx,
             [Option("member", "Mention the member you want to see the avatar", false)] DiscordUser? member = null)
         {
-            var avatar = (member ?? ctx.User).AvatarUrl;
+            try
+            {
+                var avatar = (member ?? ctx.User).AvatarUrl;
 
-            await ctx.CreateResponseAsync(
-                InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Description = $"[Click here]({avatar}) to download the avatar",
-                        Color = new DiscordColor("#363636"),
-                        ImageUrl = avatar
-                    })
-                    .AsEphemeral(false)
-            );
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Description = $"[Click here]({avatar}) to download the avatar",
+                            Color = new DiscordColor("#363636"),
+                            ImageUrl = avatar
+                        })
+                        .AsEphemeral(false)
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
         }
     }
 }

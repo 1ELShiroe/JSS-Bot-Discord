@@ -13,19 +13,34 @@ namespace JSS.BOT.SlashCommands.Fun
         public static async Task Bust(InteractionContext ctx,
             [Option("nick", "Player nickname")] string nickname)
         {
-            string url = $"https://minotar.net/bust/{nickname}/500.png";
+            try
+            {
 
-            await ctx.CreateResponseAsync(
-                InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Description = $"**Nick:** {nickname} \n\n [Click Aqui]({url})",
-                        Color = new DiscordColor("#363636"),
-                        ImageUrl = url
-                    })
-                    .AsEphemeral(false)
-            );
+                string url = $"https://minotar.net/bust/{nickname}/500.png";
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Description = $"**Nick:** {nickname} \n\n [Click Aqui]({url})",
+                            Color = new DiscordColor("#363636"),
+                            ImageUrl = url
+                        })
+                        .AsEphemeral(false)
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
         }
 
 
@@ -34,17 +49,31 @@ namespace JSS.BOT.SlashCommands.Fun
         public static async Task Head(InteractionContext ctx,
             [Option("nick", "Player nickname")] string nickname)
         {
-            await ctx.CreateResponseAsync(
-                InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Description = $"Success! mensagens deletadas.",
-                        Color = new DiscordColor("#363636"),
-                        ImageUrl = $"https://mc-heads.net/head/{nickname}/500"
-                    })
-                    .AsEphemeral(false)
-            );
+            try
+            {
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Description = $"Success! mensagens deletadas.",
+                            Color = new DiscordColor("#363636"),
+                            ImageUrl = $"https://mc-heads.net/head/{nickname}/500"
+                        })
+                        .AsEphemeral(false)
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
         }
     }
 }
