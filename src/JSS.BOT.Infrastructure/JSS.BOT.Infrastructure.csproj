@@ -2,7 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSS.BOT.Interfaces\JSS.BOT.Interfaces.csproj" />
-    <ProjectReference Include="..\JSS.BOT.Infrastructure\JSS.BOT.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl" Version="4.0.0" />
+    <PackageReference Include="Flurl.Http" Version="4.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
