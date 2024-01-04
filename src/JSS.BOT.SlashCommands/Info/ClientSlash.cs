@@ -15,25 +15,48 @@ namespace JSS.BOT.SlashCommands.Info
         //     // Seu código para o comando "info"
         // }
 
-        // [SlashCommand("ping", "Check the bot's ping")]
-        // [Cooldown(5, 10, CooldownBucketType.User)]
-        // public static async Task Ping(InteractionContext ctx)
-        // {
-        //     Console.WriteLine("AQUI");
+        [SlashCommand("ping", "Check the bot's ping")]
+        [Cooldown(5, 10, CooldownBucketType.User)]
+        public static async Task Ping(InteractionContext ctx)
+        {
+            try
+            {
+                await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
 
-        //     var followUpMessage = await ctx.FollowUpAsync(
-        //         new DiscordFollowupMessageBuilder()
-        //             .AddEmbed(new DiscordEmbedBuilder
-        //             {
-        //                 Description = $"Calculando latência....",
-        //                 Color = new DiscordColor("#363636"),
-        //             })
-        //             .AsEphemeral(false)
-        //     );
+                var followUpMessage = await ctx.FollowUpAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Description = $"Calculando latência....",
+                            Color = new DiscordColor("#363636"),
+                        })
+                        .AsEphemeral(false)
+                );
 
-        //     var ping = followUpMessage.CreationTimestamp - ctx.Interaction.CreationTimestamp;
-        //     await followUpMessage.ModifyAsync($"🏓 Pong! \n\n  Latência: **{ping}**\n  API: **{ctx.Client.Ping}**");
+                var ping = Math.Max(0, (DateTimeOffset.Now - ctx.Interaction.CreationTimestamp).TotalMilliseconds);
+                var formattedLatency = $"{ping:F2}ms";
 
-        // }
+                await ctx.EditFollowupAsync(
+                    followUpMessage.Id,
+                    new DiscordWebhookBuilder()
+                            .AddEmbed(new DiscordEmbedBuilder
+                            {
+                                Description = $"🏓 Pong! \n\n  Latência: **{formattedLatency}**\n  API: **{ctx.Client.Ping}ms**",
+                                Color = new DiscordColor("#363636"),
+                            })
+                        );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex}");
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
+        }
     }
 }

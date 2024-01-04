@@ -1,7 +1,7 @@
-using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using DSharpPlus.Entities;
+using DSharpPlus;
 
 namespace JSS.BOT.SlashCommands.Info
 {
@@ -13,27 +13,41 @@ namespace JSS.BOT.SlashCommands.Info
         public static async Task InformationUser(InteractionContext ctx,
             [Option("member", "Mention the member to view information", false)] DiscordUser? member = null)
         {
-            member ??= ctx.User;
+            try
+            {
+                member ??= ctx.User;
 
-            var roles = ctx.Guild
-                    .GetMemberAsync(member.Id).Result.Roles
-                    .Select(role => role.Name)
-                    .ToList();
+                var roles = ctx.Guild
+                        .GetMemberAsync(member.Id).Result.Roles
+                        .Select(role => role.Name)
+                        .ToList();
 
-            await ctx.CreateResponseAsync(
-                InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                    .AddEmbed(new DiscordEmbedBuilder
-                    {
-                        Description =
-                            $"**Name/ID:** {member.Username}/{member.Id}\n" +
-                            $"**Status:** {member.Presence.Status}\n" +
-                            $"**Flags:** {member.Flags}\n" +
-                            $"**Cargos:** {string.Join(", ", roles)}\n",
-                        Color = new DiscordColor("#363636"),
-                    })
-                    .AsEphemeral(false)
-            );
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .AddEmbed(new DiscordEmbedBuilder
+                        {
+                            Description =
+                                $"**Name/ID:** {member.Username}/{member.Id}\n" +
+                                $"**Status:** {member.Presence.Status}\n" +
+                                $"**Flags:** {member.Flags}\n" +
+                                $"**Cargos:** {string.Join(", ", roles)}\n",
+                            Color = new DiscordColor("#363636"),
+                        })
+                        .AsEphemeral(false)
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                await ctx.CreateResponseAsync(
+                    InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder()
+                        .WithContent($"Ocorreu um erro durante a interação!")
+                        .AsEphemeral(true)
+                );
+            }
         }
 
 

@@ -11,7 +11,6 @@ namespace JSS.BOT.SlashCommands.Admin
     public partial class IconSlash : ApplicationCommandModule
     {
         [SlashCommand("add", "Get information about the emoji")]
-        [Cooldown(5, 10, CooldownBucketType.User)]
         [RequirePermissions(Permissions.ManageEmojis)]
         public static async Task Add(InteractionContext ctx,
                 [Option("emoji", "Emoji to get information about")] string emoji,
